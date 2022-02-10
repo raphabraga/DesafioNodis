@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using API.Service.Base;
+using API.Service;
+using System.Net.Http;
 
 namespace API
 {
@@ -27,10 +30,13 @@ namespace API
 
             services.AddResponseCompression();
 
+            services.AddScoped<HttpClient>();
+            services.AddScoped<ProdutoService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-            });            
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

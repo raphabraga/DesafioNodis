@@ -12,9 +12,11 @@ namespace API.Service
             _httpClient = httpClient;
         }
 
-        public async Produto BuscarProdutoPorId(Guid produtoId)
+        public async Task<Produto> BuscarProdutoPorId(Guid produtoId)
         {
-            var produto = await Post<string>(Environment.GetEnvironmentVariable("URI_SERVICE_PRODUTO"), null);
+            var produto = await Get<Produto>(Environment.GetEnvironmentVariable("URI_SERVICE_PRODUTO") + "/Produto" + produtoId);
+            //https://61ee984ed593d20017dbaf9c.mockapi.io/api/Produto
+            return produto;
         }
 
         public async Task AlterarProduto(Guid produtoId)
@@ -27,10 +29,7 @@ namespace API.Service
 
         public async Task BuscarTodos()
         {
-            await Task.Run(() =>
-            {
-                new NotImplementedException();
-            });
+            var produtos = await Get<Produto>(Environment.GetEnvironmentVariable("URI_SERVICE_PRODUTO") + "/Produto");
         }
 
         public async Task DeletarProduto(Guid produtoId)
